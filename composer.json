@@ -1,0 +1,15 @@
+{
+    "name": "wschalle/hcapigen",
+    "type": "application",
+    "description": "Highcharts API Generator for PHP",
+    "homepage": "https://github.com/wschalle/hcapigen",
+    "license": "Proprietary",
+    "authors": [
+        {"name": "Bill Schaller", "email": "wschalle@gmail.com"}
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "nikic/php-parser": "*",
+        "doctrine/common": "*"
+    }
+}

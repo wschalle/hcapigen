@@ -1,0 +1,9 @@
+/composer.lock
+/vendor
+/HighCharts/ChartOptions/*.php
+/scripts
+/composer.phar
+
+/setEnv.bat
+
+/composer.bat
