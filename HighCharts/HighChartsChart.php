@@ -2,6 +2,7 @@
 
 namespace HighCharts;
 use HighCharts\ChartOptions\HighChartsOptions;
+use \Zend\Json\Json;
 
 class HighChartsChart {
   /**
@@ -39,7 +40,7 @@ class HighChartsChart {
   public function renderScript() {
     $jsVar = $this->options->chart->renderTo;
 
-    return "$(function() {var ".$jsVar."; ".$jsVar." = new Highcharts.Chart(".json_encode($this->options->getOptions(), JSON_PRETTY_PRINT).");});";
+    return "$(function() {var ".$jsVar."; ".$jsVar." = new Highcharts.Chart(".Json::encode($this->options->getOptions(), false, array('enableJsonExprFinder' => true)).");});";
   }
   
   public function render() {

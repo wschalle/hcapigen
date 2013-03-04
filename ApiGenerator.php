@@ -284,11 +284,12 @@ class HCApiGenerator {
       //  $propdata['children'] = $this->getProperties($property['name']);
       if($property['returnType'] == 'Array<Object>')
         $propdata['returnType'] = $propdata['className'] . '[]';
-      else if(!$property['isParent'] && empty($property['returnType']))
-        continue;
-      else
+      /*else if(!$property['isParent'] && empty($property['returnType']))
+        continue;*/
+      else if (!$property['isParent'])
         $propdata['returnType'] = $this->translateReturnType($property['returnType']);
-      
+      else if (isset($propdata['className']))
+        $propdata['returnType'] = $propdata['className']; 
       $properties[] = $propdata;
     }
     return $properties;
