@@ -105,8 +105,8 @@ class HCApiGenerator {
       $newClass->addStmts($propertyStmts[0]->stmts);
       $propnames[] = $property['name'];        
     }
-    $getOptionsMethod = $this->generateGetOptionsMethodStatement($propnames);
-    $newClass->addStmt($getOptionsMethod);
+    //$getOptionsMethod = $this->generateGetOptionsMethodStatement($propnames);
+    //$newClass->addStmt($getOptionsMethod);
     $newClass->addStmt($newClassConstructor);
     $node = $newClass->getNode();
     $node->setAttribute('comments', array(new PHPParser_Comment_Doc("/**\n * " . $class['className'] . "\n *\n * " . $this->processDescription($class['description']) . "\n */")));
@@ -183,7 +183,7 @@ class HCApiGenerator {
       }
     }
     $HighChartsOptionsClass->addStmt($HighChartsOptionsConstructor);
-    $HighChartsOptionsClass->addStmt($this->generateGetOptionsMethodStatement($classnames));
+    //$HighChartsOptionsClass->addStmt($this->generateGetOptionsMethodStatement($classnames));
     $fp = fopen($this->outputdir . 'HighChartsOptions.php', 'w');
     fwrite($fp, "<?php\n" . $this->prettyprinter->prettyPrint(array($nsnode, $HighChartsOptionsClass->getNode())));
     fclose($fp);
@@ -222,8 +222,8 @@ class HCApiGenerator {
         $stmt->addStmts($propertyStmts[0]->stmts);
         $propnames[] = $property['name'];
       }
-      $getOptionsMethod = $this->generateGetOptionsMethodStatement($propnames);
-      $stmt->addStmt($getOptionsMethod);
+      //$getOptionsMethod = $this->generateGetOptionsMethodStatement($propnames);
+      //$stmt->addStmt($getOptionsMethod);
       $node = $stmt->getNode();
       $node->setAttribute('comments', array(new PHPParser_Comment_Doc("/**\n * " . $class['className'] . "\n *\n * " . $this->processDescription($class['description']) . "\n */")));
       //$stmts[] = $node;
@@ -234,7 +234,7 @@ class HCApiGenerator {
       $hcGlobalOptionsConstructor->addStmt(new PHPParser_Node_Expr_Assign($thisReference, new PHPParser_Node_Expr_New(new PHPParser_Node_Name($class['className']))));
     }
     $hcGlobalOptions->addStmt($hcGlobalOptionsConstructor);
-    $hcGlobalOptions->addStmt($this->generateGetOptionsMethodStatement($classnames));
+    //$hcGlobalOptions->addStmt($this->generateGetOptionsMethodStatement($classnames));
     $fp = fopen($this->outputdir . 'HighChartsGlobalOptions.php', 'w');
     fwrite($fp, "<?php\n" . $this->prettyprinter->prettyPrint(array($nsnode, $hcGlobalOptions->getNode())));
     fclose($fp);
