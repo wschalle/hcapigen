@@ -90,15 +90,20 @@ class HCApiGenerator {
     //Generate getters/setters for properties      
       $placeHolders = array('name' => $property['name'], 'type' => $property['returnType'], 'description' => $this->processDescription($property['description']));
       $propertyStmts = $gsTemplate->getStmts($placeHolders);
+      $thisReference = new PHPParser_Node_Expr_PropertyFetch(new PHPParser_Node_Expr_Variable('this'), $property['name']);
       if($property['isParent']) { //Recursively generate classes
         $this->generateClass($property);      
         
-        $thisReference = new PHPParser_Node_Expr_PropertyFetch(new PHPParser_Node_Expr_Variable('this'), $property['name']);
-        if(strpos($property['returnType'], '[]') !== false) {
+        if(strpos($property['returnType'], '[]') !== false) { // Create an empty collection for array type parameters that have child classes
           $collectionstmt = new PHPParser_Node_Expr_Assign($thisReference, new PHPParser_Node_Expr_New(new PHPParser_Node_Name('\HighCharts\ChartOptionsCollection')));
           $newClassConstructor->addStmt($collectionstmt);
         } else {        
           $newClassConstructor->addStmt(new PHPParser_Node_Expr_Assign($thisReference, new PHPParser_Node_Expr_New(new PHPParser_Node_Name($property['className']))));
+        }
+      } else {
+        if(strpos($property['returnType'], '[]') !== false) { // Create an empty collection for unspecified array types
+          $collectionstmt = new PHPParser_Node_Expr_Assign($thisReference, new PHPParser_Node_Expr_New(new PHPParser_Node_Name('\HighCharts\ChartOptions')));
+          $newClassConstructor->addStmt($collectionstmt);
         }
       }
 
