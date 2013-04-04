@@ -14,6 +14,8 @@ class HighChartsChart {
   private $_style = array();
   
   private $_class = array();
+
+  private $_containerId;
   
   public function __construct() {
     $this->options = new HighChartsOptions();
@@ -21,7 +23,7 @@ class HighChartsChart {
   }
   
   public function renderContainer() {
-    $renderTo = $this->options->chart->renderTo;
+    $renderTo = $this->_containerId;
 
     //Mux down a style for the container
     $compiledStyle = array();
@@ -38,7 +40,7 @@ class HighChartsChart {
   }
   
   public function renderScript() {
-    $jsVar = $this->options->chart->renderTo;
+    $jsVar = $this->_containerId;
 
     return "$(function() {var ".$jsVar."; ".$jsVar." = new Highcharts.Chart(".Json::encode($this->options->getOptions(), false, array('enableJsonExprFinder' => true)).");});";
   }
@@ -48,7 +50,11 @@ class HighChartsChart {
   }
   
   public function setContainerId($id) {
-    $this->options->chart->renderTo = $id;
+      if(!empty($id)) {
+          $this->_containerId = $id;
+      }
+
+      $this->options->chart->renderTo = $this->_containerId;
   }
   
   public function getContainerId($id) {
