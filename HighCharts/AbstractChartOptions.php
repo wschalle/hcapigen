@@ -4,7 +4,8 @@ namespace HighCharts;
 abstract class AbstractChartOptions implements ChartOptionsInterface, \ArrayAccess{
   public function getOptions() {
     $optArray = array();
-    $props = get_object_vars($this);
+    //___container contains all the vars set by array offset that had invalid names
+    $props = array_merge($this->___container, get_object_vars($this));
     foreach($props as $name => $value) {
       if($name === '___container')
         continue;
@@ -16,10 +17,6 @@ abstract class AbstractChartOptions implements ChartOptionsInterface, \ArrayAcce
         $optArray[$name] = $value;
       }
     }
-    //___container contains all the vars set by array offset that had invalid names
-    if(count($this->___container) > 0 )
-      return array_merge($this->___container, $optArray);
-      
     return $optArray;
   } 
   
